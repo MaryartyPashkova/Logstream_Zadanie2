@@ -1,0 +1,199 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div id="calc">
+        <input id="one" type="text" title="Введите первое число" placeholder="Введите первое число" />
+        <select>
+
+            <option value="1">+</option>
+            <option value="2">-</option>
+            <option value="3">/</option>
+            <option value="4">*</option>
+
+        </select>
+        <input id="two" type="text" title="Введите второе число" placeholder="Введите второе число" />
+        <button id="result" onclick="res()">=</button>
+        <input id="three" title="Результат" placeholder="Результат" disabled />
+    </div>
+    <div class="resultat"><p style="font-size:20px">История результатов:</p></div>
+
+    <div id="calc2">
+
+        <input id="show" type="text" title="Показ действий" placeholder="Строка ввода" disabled />
+        <button onclick="vvod(id)" class="butons" value="0" id="nol">0</button>
+        <button onclick="vvod(id)" class="butons" value="1" id="odin">1</button>
+        <button onclick="vvod(id)" class="butons" value="2" id="dva">2</button>
+        <button onclick="vvod(id)" class="butons" value="3" id="tri">3</button>
+        <button onclick="vvod(id)" class="butons" value="4" id="che">4</button>
+        <button onclick="vvod(id)" class="butons" value="5" id="pya">5</button>
+        <button onclick="vvod(id)" class="butons" value="6" id="sh">6</button>
+        <button onclick="vvod(id)" class="butons" value="7" id="sem">7</button>
+        <button onclick="vvod(id)" class="butons" value="8" id="vos">8</button>
+        <button onclick="vvod(id)" class="butons" value="9" id="dev">9</button>
+        <p>Операции:</p>
+        <button onclick="vvod(id)" value="+" id="plus">+</button>
+        <button onclick="vvod(id)" value="-" id="minus">-</button>
+        <button onclick="vvod(id)" value="*" id="mult">*</button>
+        <button onclick="vvod(id)" value="/" id="delit">/</button>
+        <button onclick="itog(id)" id="ravno">=</button>
+
+    </div>
+    <div class="resultat2"><p style="font-size:20px">История результатов 2:</p></div>
+
+    <script>
+        const bldivres = document.querySelector(".resultat");
+        var history = new Array();
+        historylen = 0;
+        function res() {
+            let input1 = document.getElementById('one').value;
+            let input2 = document.getElementById('two').value;
+            const inputElement = document.getElementById('three');
+            var select = document.querySelector('select').value;
+            if (isNaN(input1) || isNaN(input2)) {
+                document.getElementById('one').value = "";
+                document.getElementById('two').value = "";
+                alert("Пожалуйста вводите числа!");
+            }
+            else {
+                if (select == "1") {
+                    result = Number(input1) + Number(input2);
+                    inputElement.value = String(result);
+                    let stroca = input1 + " + " + input2 + " = " + String(result);
+                    let pres = document.createElement("p");
+                    pres.className = "history";
+                    pres.innerHTML = stroca;
+                    bldivres.appendChild(pres);
+                }
+                if (select == "2") {
+                    result = Number(input1) - Number(input2);
+                    inputElement.value = String(result);
+                    let stroca = input1 + " - " + input2 + " = " + String(result);
+                    let pres = document.createElement("p");
+                    pres.className = "history";
+                    pres.innerHTML = stroca;
+                    bldivres.appendChild(pres);
+                }
+                if (select == "3") {
+                    if (Number(input2) !== 0) {
+                        result = Number(input1) / Number(input2);
+                        inputElement.value = String(result);
+                        let stroca = input1 + " / " + input2 + " = " + String(result);
+                        let pres = document.createElement("p");
+                        pres.className = "history";
+                        pres.innerHTML = stroca;
+                        bldivres.appendChild(pres);
+                    }
+                    else {
+                        alert("Я не буду делить на 0!");
+                    }
+                }
+                if (select == "4") {
+                    result = Number(input1) * Number(input2);
+                    inputElement.value = String(result);
+                    let stroca = input1 + " * " + input2 + " = " + String(result);
+                    let pres = document.createElement("p");
+                    pres.className = "history";
+                    pres.innerHTML = stroca;
+                    bldivres.appendChild(pres);
+                }
+            }
+
+        }
+        var k = 0;
+        const bldivres2 = document.querySelector(".resultat2");
+        function vvod(id) {
+            const keys = document.getElementById(String(id));
+            const inputE = document.getElementById('show');
+            //inputE.value += keys.value;
+
+
+            if ((keys.value == "+" || keys.value == "-" || keys.value == "*" || keys.value == "/")) {                
+                k += 1;
+            }
+            if (k == 1 && (keys.value == "+" || keys.value == "-" || keys.value == "*" || keys.value == "/")) {
+                inputE.value += keys.value;
+            }
+            else if (keys.value != "+" && keys.value != "-" && keys.value != "*" && keys.value != "/")
+            {
+                inputE.value += keys.value;
+            }
+            
+        } 
+        function itog() {
+            let str = document.getElementById('show').value;
+            console.log(str);
+            let b;
+            let n;
+            if (str.indexOf("-") != -1) {
+                b = str.indexOf("-");
+                n = 1;
+                //console.log("b= ", b );
+            }
+            if (str.indexOf("+") != -1) {
+                b = str.indexOf("+");
+                n = 2;
+                //console.log("b= ", b);
+            }
+            if (str.indexOf("*") != -1) {
+                b = str.indexOf("*");
+                n = 3;
+                //console.log("b= ", b);
+            }
+            if (str.indexOf("/") != -1) {
+                b = str.indexOf("/");
+                n = 4;
+                //console.log("b= ", b);
+            }
+            onenumb = str.substr(0, b);
+            twonumb = str.substr(b + 1,);
+            console.log("1:", onenumb, "2:", twonumb);
+            let itogo;
+            if (n == 1) {
+                itogo = Number(onenumb) - Number(twonumb);
+            }
+            if (n == 2) {
+                itogo = Number(onenumb) + Number(twonumb);
+            }
+            if (n == 3) {
+
+                itogo = Number(onenumb) * Number(twonumb);
+            }
+            if (n == 4)
+            {
+                if (Number(twonumb) !== 0) {
+                    itogo = Number(onenumb) / Number(twonumb);
+                }
+                else {
+                    alert("Я не буду делить на 0!");
+                }
+                
+            }
+
+            let ires = str + "=" + String(itogo);
+            let pres2 = document.createElement("p");
+            pres2.className = "history2";
+            pres2.innerHTML = ires;
+            bldivres2.appendChild(pres2);
+            document.getElementById('show').value = '';
+            k = 0;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
